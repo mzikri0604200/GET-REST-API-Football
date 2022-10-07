@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
     <title>API TEST</title>
+    <link rel="shortcut icon" href="https://via.placeholder.com/70" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-light">
@@ -32,36 +33,32 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
     <script>
-      $.ajax({
-        url: 'https://www.thesportsdb.com/api/v1/json/2/search_all_teams.php',
-        type: 'get',
-        dataType: 'json',
-        data: {
-          l: 'English_Premier_League',
-        },
-        success: function (result) {
-          let teams = result.teams;
+      var settings = {
+        url: 'https://app.sportdataapi.com/api/v1/soccer/teams?apikey=9b1c4700-4613-11ed-9e11-2bbdd4edca71&country_id=42',
+        method: 'GET',
+        timeout: 0,
+      };
 
-          $.each(teams, function (i, data) {
-            $('.row').append(`
-            <div class="col-lg-6 mb-4">
+      $.ajax(settings).done(function (response) {
+        let teams = response.data;
+        // console.log(teams);
+
+        $.each(teams, function (i, data) {
+          $('.row').append(`
+            <div class="col-sm-6 mb-4">
               <div class="d-flex flex-wrap">
                 <div class="col-lg-2">
-                  <img src="${data.strTeamBadge}" alt="${data.strTeam}" class="img-fluid">
+                  <img src="${data.logo}" alt="${data.name}" class="img-fluid">
                 </div>
                 <div class="col-lg-10 ps-3">
-                  <h6>${data.strTeam}</h6>
-                  <p class="m-0">Berdiri Tahun : ${data.intFormedYear}</p>
-                  <p class="m-0">Stadion : ${data.strStadium}</p>
-                  <p class="m-0">Location Stadion : ${data.strStadiumLocation}</p>
-                  <p class="m-0">Kapasitas Stadion : ${data.intStadiumCapacity}</p>
+                  <h6>${data.name}</h6>
+                  <p class="m-0">ID Team : ${data.team_id}</p>
+                  <p class="m-0">Short Code : ${data.short_code}</p>
                 </div>
               </div>
             </div>
             `);
-          });
-          console.log(teams);
-        },
+        });
       });
 
       $('.nav-link').on('click', function () {
