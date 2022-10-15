@@ -50,10 +50,40 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-
-    <script src="script.js"></script>
-
     <script>
+      var settings = {
+        url: 'https://api.sportsdata.io/v3/soccer/scores/json/CompetitionDetails/EPL?key=18767a225a28469294f60462b4705bf0',
+        method: 'GET',
+        timeout: 0,
+      };
+
+      $.ajax(settings).done(function (response) {
+        $('.season').text(response.CurrentSeason.Name);
+        let teams = response.Teams;
+        $.each(teams, function (i, data) {
+          $('.listTeams').append(`
+            <div class="col-sm-6 mb-4">
+              <div class="card h-100">
+                <div class="d-flex flex-wrap">
+                  <div class="col-sm-2">
+                    <img src="${data.WikipediaLogoUrl}" alt="${data.name}" class="img-fluid">
+                  </div>
+                  <div class="col-sm-10 ps-3">
+                    <h6 role="button" data-id="${data.TeamId}" class="btn-modal stretched-link">${data.Name}</h6>
+                    <p class="m-0">ID : ${data.TeamId}</p>
+                    <p class="m-0">Berdiri Tahun : ${data.Founded}</p>
+                  </div>
+                </div>
+              </div>
+            </div>`);
+        });
+      });
+
+      $('.row').on('click', '.btn-modal', function () {
+        // localStorage.setItem('id', $(this).data('id'));
+        window.location.href = 'detail.html?id=' + $(this).data('id') + '';
+      });
+
       $('.nav-link').on('click', function () {
         $('.nav-link').removeClass('active');
         $(this).addClass('active');
