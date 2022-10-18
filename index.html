@@ -28,6 +28,8 @@
       <h3 class="py-3">Premier League | Season : <span class="season"></span></h3>
 
       <div class="row listTeams"></div>
+      <div class="row listPlyr"></div>
+      <a href=""></a>
       <!-- Modal -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -60,23 +62,65 @@
       $.ajax(settings).done(function (response) {
         $('.season').text(response.CurrentSeason.Name);
         let teams = response.Teams;
+
         $.each(teams, function (i, data) {
           $('.listTeams').append(`
-            <div class="col-sm-6 mb-4">
-              <div class="card h-100">
-                <div class="d-flex flex-wrap">
-                  <div class="col-sm-2">
-                    <img src="${data.WikipediaLogoUrl}" alt="${data.name}" class="img-fluid">
+            <div class="col-md-6 mb-4">
+              <div class="card h-100 border-0">
+                <div class="row">
+                  <div class="col-sm-2 col-3 mb-4 mb-sm-0">
+                    <img src="${data.WikipediaLogoUrl}" alt="${data.Name}" class="img-fluid">
                   </div>
-                  <div class="col-sm-10 ps-3">
-                    <h6 role="button" data-id="${data.TeamId}" class="btn-modal stretched-link">${data.Name}</h6>
-                    <p class="m-0">ID : ${data.TeamId}</p>
-                    <p class="m-0">Berdiri Tahun : ${data.Founded}</p>
+                  <div class="col-sm-10 col-9 ps-lg-3">
+                    <a role="button" data-id="${data.TeamId}" class="text-reset text-decoration-none btn-modal">
+                      <h5 class="fw-bold">${data.Name}</h5>  
+                    </a>
+                    <div class="row">
+                      <div class="col-lg-3">Didirikan</div>
+                      <div class="col fw-semibold">${data.Founded}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Stadium</div>
+                      <div class="col fw-semibold">${data.VenueName}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Alamat</div>
+                      <div class="col fw-semibold">${data.Address}, ${data.City}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Phone</div>
+                      <div class="col fw-semibold">${data.Phone == null ? 0 : data.Phone}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Website</div>
+                      <div class="col"> <a href="${data.Website}" target="_blank">${data.Website}</a></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>`);
+
+          let plyr = data.Players;
+          $.each(plyr, function (i, data) {
+            console.log(data.CommonName);
+          });
         });
+
+        // $.each(plyr, function (i, data) {
+        //   $('.listPlyr').append(`
+        //     <div class="col-sm-6 mb-4">
+        //       <div class="card h-100">
+        //         <div class="d-flex flex-wrap">
+        //           <div class="col-sm-2">
+        //             <img src="${data.PhotoUrl}" alt="${data.CommonName}" class="img-fluid">
+        //           </div>
+        //           <div class="col-sm-10 ps-3">
+        //             <h6>${data.CommonName}</h6>
+        //           </div>
+        //         </div>
+        //       </div>
+        //     </div>`);
+        // });
       });
 
       $('.row').on('click', '.btn-modal', function () {
