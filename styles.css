@@ -1,11 +1,7 @@
 h3 {
-  color: green;
+  color: yellow;
 }
 
 .bg-blue {
-  background-color: blue;
-}
-
-.nav-link {
-  color: white;
+  background-color: rgb(187, 187, 233);
 }
