@@ -1,7 +1,12 @@
 h3 {
-  color: yellow;
+  color: rgb(255, 115, 0);
 }
 
 .bg-blue {
   background-color: rgb(187, 187, 233);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: rgb(255, 115, 0);
 }
