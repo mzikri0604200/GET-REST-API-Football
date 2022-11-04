@@ -73,7 +73,7 @@
                     <img src="${data.WikipediaLogoUrl}" alt="${data.Name}" class="img-fluid">
                   </div>
                   <div class="col-sm-10 col-9 ps-lg-3">
-                    <a role="button" data-id="${data.TeamId}" class="text-reset text-decoration-none btn-modal">
+                    <a role="button" data-id="${data.TeamId}" data-name="${data.Name}" class="text-reset text-decoration-none btn-modal">
                       <h5 class="fw-bold">${data.Name}</h5>  
                     </a>
                     <div class="row">
@@ -126,7 +126,7 @@
 
       $('.row').on('click', '.btn-modal', function () {
         // localStorage.setItem('id', $(this).data('id'));
-        window.location.href = 'detail.html?id=' + $(this).data('id') + '';
+        window.location.href = 'detail.html?id=' + $(this).data('id') + '&name=' + $(this).data('name') + '';
       });
 
       $('.nav-link').on('click', function () {
