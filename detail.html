@@ -10,7 +10,7 @@
   </head>
   <body>
     <div class="container">
-      <h3 class="py-3">Premier League | Season : <span class="season"></span></h3>
+      <h3 class="py-3">Club : <span class="club"></span></h3>
 
       <div class="row listPlayer"></div>
       <!-- Modal -->
@@ -40,6 +40,16 @@
       let searchParams = new URLSearchParams(window.location.search);
       let idTeam = searchParams.get('id');
       // const idTeam = localStorage.getItem('id');
+      var setting = {
+        url: 'https://api.sportsdata.io/v3/soccer/scores/json/MembershipsByTeam/' + idTeam + '?key=57a30983d08c419fb336fe1fb20f25e9',
+        method: 'GET',
+        timeout: 0,
+      };
+
+      $.ajax(setting).done(function (response) {
+        $('.club').text(response[0].TeamName);
+        console.log(response[0]);
+      });
 
       var template = '';
       $.ajax({
@@ -52,21 +62,21 @@
         success: function (result) {
           $.each(result, function (i, data) {
             template += `
-						<div class="col-sm-6 mb-4">
-							<div class="d-flex flex-wrap">
-								<div class="col-1">
-									<h1>${data.Jersey == null ? 0 : data.Jersey}</h1>
-								</div>
-								<div class="col-sm-10 ps-3">
-									<h6>${data.ShortName}</h6>
-								</div>
-							</div>
-						</div>
-						`;
+      <div class="col-sm-6 mb-4">
+      	<div class="d-flex flex-wrap">
+      		<div class="col-1">
+      			<h1>${data.Jersey == null ? 0 : data.Jersey}</h1>
+      		</div>
+      		<div class="col-sm-10 ps-3">
+      			<h6>${data.ShortName}</h6>
+      		</div>
+      	</div>
+      </div>
+      `;
           });
 
           $('.listPlayer').html(template);
-          console.log(result);
+          // console.log(result);
         },
       });
     </script>
