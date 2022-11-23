@@ -1,3 +1,19 @@
+.nav-pills {
+  --bs-nav-pills-border-radius: 0.375rem;
+  --bs-nav-pills-link-active-color: #333;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: white;
+  font-weight: bold;
+}
+
+.nav-link {
+  font-weight: bold;
+  color: white;
+}
+
 svg {
   vertical-align: bottom;
 }
