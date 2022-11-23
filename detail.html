@@ -88,9 +88,9 @@
         success: function (result) {
           $.each(result, function (i, data) {
             template += `
-              <div class="col-sm-6 col-lg-3 mb-4">
+              <div class="col-sm-6 col-lg-4 mb-4">
               <div class="card h-100">
-                <div class="d-flex flex-wrap">
+                <div class="d-flex flex-wrap h-100">
                   <div class="col-sm bg-dark bg-opacity-25 rounded-start col-xl-4 col-3 text-center">
                     <div class="card-body">
                       <h1 class="mb-0">${data.Jersey == null ? 0 : data.Jersey}</h1>
