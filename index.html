@@ -42,8 +42,8 @@
             <div class="row listSpain"></div>
           </div>
           <div class="tab-pane fade" id="value3" role="tabpanel" aria-labelledby="value3-tab">
-            <h4 class="fredoka lh-base fw-bold">MAKE IT HAPPEN! MEH</h4>
-            <h5 class="fredoka lh-base">We are confident that we can manifest success, if we stick with our vision and mission and stay true to our values, we, the whole community will make it happen.</h5>
+            <h3 class="py-3">Seria A | Season : <span class="season_seriea"></span></h3>
+            <div class="row listItalia"></div>
           </div>
         </div>
       </div>
@@ -156,7 +156,60 @@
               <div class="card h-100 border-0">
                 <div class="row">
                   <div class="col-sm-2 col-3 mb-4 mb-sm-0">
-                    <img src="${data.WikipediaLogoUrl == null ? 'https://cdn-icons-png.flaticon.com/512/1099/1099672.png' : data.WikipediaLogoUrl}" alt="${data.Name}" class="img-fluid">
+                    <img onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/1099/1099672.png'" src="${
+                      data.WikipediaLogoUrl == null ? 'https://cdn-icons-png.flaticon.com/512/1099/1099672.png' : data.WikipediaLogoUrl
+                    }" alt="${data.Name}" class="img-fluid">
+                  </div>
+                  <div class="col-sm-10 col-9 ps-lg-3">
+                    <a role="button" data-id="${data.TeamId}" data-name="${data.Name}" class="text-reset text-decoration-none btn-modal">
+                      <h5 class="fw-bold">${data.Name}</h5>  
+                    </a>
+                    <div class="row">
+                      <div class="col-lg-3">Didirikan</div>
+                      <div class="col fw-semibold">${data.Founded}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Stadium</div>
+                      <div class="col fw-semibold">${data.VenueName}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Alamat</div>
+                      <div class="col fw-semibold">${data.Address}, ${data.City}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Phone</div>
+                      <div class="col fw-semibold">${data.Phone == null ? 0 : data.Phone}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Website</div>
+                      <div class="col"> <a href="${data.Website}" target="_blank">${data.Website}</a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>`
+          );
+        });
+      });
+
+      var seriea = {
+        url: 'https://api.sportsdata.io/v3/soccer/scores/json/CompetitionDetails/ITSA?key=18767a225a28469294f60462b4705bf0',
+        method: 'GET',
+        timeout: 0,
+      };
+      $.ajax(seriea).done(function (response) {
+        $('.season_seriea').text(response.CurrentSeason.Name);
+        let teams = response.Teams;
+
+        $.each(teams, function (i, data) {
+          $('.listItalia').append(
+            `<div class="col-md-6 mb-4">
+              <div class="card h-100 border-0">
+                <div class="row">
+                  <div class="col-sm-2 col-3 mb-4 mb-sm-0">
+                    <img onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/1099/1099672.png'" src="${
+                      data.WikipediaLogoUrl == null ? 'https://cdn-icons-png.flaticon.com/512/1099/1099672.png' : data.WikipediaLogoUrl
+                    }" alt="${data.Name}" class="img-fluid">
                   </div>
                   <div class="col-sm-10 col-9 ps-lg-3">
                     <a role="button" data-id="${data.TeamId}" data-name="${data.Name}" class="text-reset text-decoration-none btn-modal">
