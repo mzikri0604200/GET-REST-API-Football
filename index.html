@@ -20,7 +20,7 @@
                 <button class="nav-link active" id="value1-tab" data-bs-toggle="pill" data-bs-target="#value1" type="button" role="tab" aria-controls="value1" aria-selected="true">Premier League</button>
               </li>
               <li class="nav-item mx-lg-3" role="presentation">
-                <button class="nav-link" id="value2-tab" data-bs-toggle="pill" data-bs-target="#value2" type="button" role="tab" aria-controls="value2" aria-selected="false">LA Liga</button>
+                <button class="nav-link" id="value2-tab" data-bs-toggle="pill" data-bs-target="#value2" type="button" role="tab" aria-controls="value2" aria-selected="false">La Liga</button>
               </li>
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="value3-tab" data-bs-toggle="pill" data-bs-target="#value3" type="button" role="tab" aria-controls="value3" aria-selected="false">Serie A</button>
@@ -34,12 +34,12 @@
       <div class="content">
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="value1" role="tabpanel" aria-labelledby="value1-tab">
-            <h3 class="py-3">Premier League | Season : <span class="season"></span></h3>
+            <h3 class="py-3">Premier League | Season : <span class="season_epl"></span></h3>
             <div class="row listTeams"></div>
           </div>
           <div class="tab-pane fade" id="value2" role="tabpanel" aria-labelledby="value2-tab">
-            <h4 class="fredoka lh-base fw-bold">FUN THINGS ONLY</h4>
-            <h5 class="fredoka lh-base">Since the world has become monotone, all boring things are taboo! Here at Zodicon, we prioritize FUN things only!</h5>
+            <h3 class="py-3">La Liga | Season : <span class="season_laliga"></span></h3>
+            <div class="row listSpain"></div>
           </div>
           <div class="tab-pane fade" id="value3" role="tabpanel" aria-labelledby="value3-tab">
             <h4 class="fredoka lh-base fw-bold">MAKE IT HAPPEN! MEH</h4>
@@ -78,7 +78,7 @@
       };
 
       $.ajax(settings).done(function (response) {
-        $('.season').text(response.CurrentSeason.Name);
+        $('.season_epl').text(response.CurrentSeason.Name);
         let teams = response.Teams;
 
         $.each(teams, function (i, data) {
@@ -139,6 +139,55 @@
         //       </div>
         //     </div>`);
         // });
+      });
+
+      var laliga = {
+        url: 'https://api.sportsdata.io/v3/soccer/scores/json/CompetitionDetails/ESP?key=18767a225a28469294f60462b4705bf0',
+        method: 'GET',
+        timeout: 0,
+      };
+      $.ajax(laliga).done(function (response) {
+        $('.season_laliga').text(response.CurrentSeason.Name);
+        let teams = response.Teams;
+
+        $.each(teams, function (i, data) {
+          $('.listSpain').append(
+            `<div class="col-md-6 mb-4">
+              <div class="card h-100 border-0">
+                <div class="row">
+                  <div class="col-sm-2 col-3 mb-4 mb-sm-0">
+                    <img src="${data.WikipediaLogoUrl == null ? 'https://cdn-icons-png.flaticon.com/512/1099/1099672.png' : data.WikipediaLogoUrl}" alt="${data.Name}" class="img-fluid">
+                  </div>
+                  <div class="col-sm-10 col-9 ps-lg-3">
+                    <a role="button" data-id="${data.TeamId}" data-name="${data.Name}" class="text-reset text-decoration-none btn-modal">
+                      <h5 class="fw-bold">${data.Name}</h5>  
+                    </a>
+                    <div class="row">
+                      <div class="col-lg-3">Didirikan</div>
+                      <div class="col fw-semibold">${data.Founded}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Stadium</div>
+                      <div class="col fw-semibold">${data.VenueName}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Alamat</div>
+                      <div class="col fw-semibold">${data.Address}, ${data.City}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Phone</div>
+                      <div class="col fw-semibold">${data.Phone == null ? 0 : data.Phone}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">Website</div>
+                      <div class="col"> <a href="${data.Website}" target="_blank">${data.Website}</a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>`
+          );
+        });
       });
 
       $('.row').on('click', '.btn-modal', function () {
